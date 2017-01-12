@@ -49,8 +49,8 @@
  *
  * The array (quantum-set) is SCULLC_QSET long.
  */
-#define SCULLC_QUANTUM  4000 /* use a quantum size like scull */
-#define SCULLC_QSET     500
+#define SCULLC_QUANTUM  400 /* use a quantum size like scull */
+#define SCULLC_QSET     50
 
 struct scullc_dev {
 	void **data;

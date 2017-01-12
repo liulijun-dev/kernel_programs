@@ -1,6 +1,6 @@
 
 # Comment/uncomment the following line to enable/disable debugging
-#DEBUG = y
+DEBUG = y
 
 
 ifeq ($(DEBUG),y)
@@ -9,17 +9,17 @@ else
   DEBFLAGS = -O2
 endif
 
-CFLAGS += $(DEBFLAGS) -I$(LDDINC)
+EXTRA_CFLAGS += $(DEBFLAGS) -I$(LDDINC) -w
 
-TARGET = scullc
+#TARGET = scullc
 
-ifneq ($(KERNELRELEASE),)
+#ifneq ($(KERNELRELEASE),)
 
 scullc-objs := main.o
 
 obj-m	:= scullc.o
 
-else
+#else
 
 KERNELDIR ?= /lib/modules/$(shell uname -r)/build
 PWD       := $(shell pwd)
@@ -27,7 +27,7 @@ PWD       := $(shell pwd)
 modules:
 	$(MAKE) -C $(KERNELDIR) M=$(PWD) LDDINC=$(PWD) modules
 
-endif
+#endif
 
 
 install:

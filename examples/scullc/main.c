@@ -15,7 +15,6 @@
  * $Id: _main.c.in,v 1.21 2004/10/14 20:11:39 corbet Exp $
  */
 
-#include <linux/config.h>
 #include <linux/module.h>
 #include <linux/moduleparam.h>
 #include <linux/init.h>
@@ -31,7 +30,7 @@
 #include "scullc.h"		/* local definitions */
 
 
-int scullc_major =   SCULLC_MAJOR;
+int scullc_major =   SCULLC_MAJOR
 int scullc_devs =    SCULLC_DEVS;	/* number of bare scullc devices */
 int scullc_qset =    SCULLC_QSET;
 int scullc_quantum = SCULLC_QUANTUM;
@@ -49,7 +48,7 @@ int scullc_trim(struct scullc_dev *dev);
 void scullc_cleanup(void);
 
 /* declare one cache pointer: use it for all devices */
-kmem_cache_t *scullc_cache;
+struct kmem_cache *scullc_cache;
 
 
 
@@ -467,7 +466,7 @@ struct file_operations scullc_fops = {
 	.llseek =    scullc_llseek,
 	.read =	     scullc_read,
 	.write =     scullc_write,
-	.ioctl =     scullc_ioctl,
+	.compat_ioctl =     scullc_ioctl,
 	.open =	     scullc_open,
 	.release =   scullc_release,
 	.aio_read =  scullc_aio_read,
@@ -558,7 +557,7 @@ int scullc_init(void)
 	}
 
 	scullc_cache = kmem_cache_create("scullc", scullc_quantum,
-			0, SLAB_HWCACHE_ALIGN, NULL, NULL); /* no ctor/dtor */
+			0, SLAB_HWCACHE_ALIGN, NULL); /* no ctor/dtor */
 	if (!scullc_cache) {
 		scullc_cleanup();
 		return -ENOMEM;
